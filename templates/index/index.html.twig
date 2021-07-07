@@ -1,20 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello IndexController!{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/home/eddy/Documents/Madinter/interface-messagerie/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/home/eddy/Documents/Madinter/interface-messagerie/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div class="wrapper">
+        <div class="section features-6">
+            <div class="container">
+                <div class="container mt-5 mb-5">
+                    <div class="d-flex justify-content-center row">
+                        <div class="d-flex flex-column col-md-8">
+                            <div class="coment-bottom  bg-white p-2 px-4">
+                                {% if app.user %}
+                                    <div class="mb-3">
+                                        Vous êtes connecté en tant que {{ app.user.username }},
+                                        <a href="{{ path('app_logout') }}" onclick="return confirm('Voulez-vous vraiment se deconnecter ? ')" class="btn btn-outline-danger btn-sm">Deconnexion</a>
+                                    </div>
+                                {% endif %}
+                                <div class="commented-section mt-2">
+                                    <div id="list-comment"></div>
+                                    {{ form_start(form) }}
+                                    {{ form_row(form.email) }}
+                                    {{ form_row(form.message) }}
+                                    <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+                                        <button id="btn_post" {% if app.user is null %}disabled{% endif %}
+                                                class="btn btn-primary" type="button">Envoyer
+                                        </button>
+                                    </div>
+                                    {% if app.user is null %}
+                                        <span class="text text-danger text-sm-left">Connectez-vous à votre compte pour envoyer un message.Veuillez cliquer<a
+                                                    href="{{ path('app_login') }}"> ici</a> </span>
+                                    {% endif %}
+                                    {{ form_end(form) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        let url_comment_list = "{{ path('comment_list_ajax') }}";
+        let url_post_message = "{{ path('post_comment') }}";
+    </script>
+    <script src="{{ asset('comment.js') }}"></script>
 {% endblock %}
