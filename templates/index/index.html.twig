@@ -22,7 +22,7 @@
                                     {{ form_row(form.email) }}
                                     {{ form_row(form.message) }}
                                     <div class="d-flex flex-row add-comment-section mt-4 mb-4">
-                                        <button id="btn_post" {% if app.user is null %}disabled{% endif %}
+                                        <button disabled id="btn_post" {% if app.user is null %}disabled{% endif %}
                                                 class="btn btn-primary" type="button">Envoyer
                                         </button>
                                     </div>

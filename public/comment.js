@@ -1,5 +1,12 @@
 $(document).ready(function () {
     listMessage();
+    $('#comment_message').on('keyup', function (ev) {
+        if ($(this).val() !== "" && $('#comment_email').val() !== "") {
+            $('#btn_post').prop('disabled', false);
+        } else {
+            $('#btn_post').prop('disabled', true);
+        }
+    });
     $('#btn_post').on('click', function (ev) {
         let email = $('#comment_email').val()
         let message = $('#comment_message').val()
@@ -48,6 +55,6 @@ function listMessage() {
  * function vidage des champs apres l'envoie
  */
 function emptyField() {
-    $('#comment_email').val('')
-    $('#comment_message').val('')
+    $('#comment_email').val('');
+    $('#comment_message').val('');
 }
